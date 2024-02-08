@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Chat Application</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Lato", sans-serif;
+    }
+    .signupFrm {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .form {
+      background-color: #D2B48C;
+      width: 400px;
+      border-radius: 8px;
+      padding: 20px 40px;
+    }
+
+    .title {
+      font-size: 50px;
+      margin-bottom: 50px;
+      color: #8B4513;
+    }
+
+    .inputContainer {
+      position: relative;
+      height: auto;
+      width: 90%;
+      margin-bottom: 17px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .label {
+      margin-bottom: 5px;
+      color: #8B4513;
+      font-size: 16px;
+    }
+
+    .input {
+      height: 45px;
+      width: 100%;
+      border: 1px solid #696969;
+      border-radius: 7px;
+      font-size: 16px;
+      padding: 0 20px;
+    }
+
+      /* Hide the placeholder texts (a) */
+
+    ::placeholder {
+        color: transparent;
+    }
+
+    .submitBtn {
+      display: block;
+      margin-left: auto;
+      padding: 15px 30px;
+      border: solid 1px black;
+      background-color: #8B4513;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 150px;
+    }
+
+    .input:not(:placeholder-shown)+ .label {
+        top: -7px;
+        left: 3px;
+        z-index: 10;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    h1{
+        text-align: center;
+    }
+    #err{
+      color: red;
+      position: absolute;
+      padding: 15px;
+    }
+  </style>
+  <script>
+  </script>
+</head>
+<body onload="checkForErr()">
+    <div class="signupFrm">
+        <form action="/login" method="post" class="form">
+          <h1 class="title">Sign Up</h1>
+    
+          <div class="inputContainer">
+            <label class="label">Username</label>
+            <input type="text" class="input" name="username" placeholder="Username" required>
+          </div>
+    
+          <div class="inputContainer">
+            <label class="label">First Name</label>
+            <input type="text" class="input" name="firstname" placeholder="First Name">
+          </div>
+
+          <div class="inputContainer">
+            <label class="label">Last Name</label>
+            <input type="text" class="input" name="lastname" placeholder="Last Name">
+          </div>
+    
+          <div class="inputContainer">
+            <label class="label">Password</label>
+            <input type="password" class="input" name="password" placeholder="password" required minlength="5">
+
+          </div>
+          <div id="err">
+          </div>
+
+          <input type="submit" class="submitBtn" value="Submit">
+
+          <p>Already have an account? <a href="/login">Log In</a></p>
+
+        </form>
+      </div>
+
+</body>
+
+<script>
+      function checkForErr(){
+        var objUrlParams = new URLSearchParams(window.location.search);
+        if(objUrlParams.get('err')=="username"){
+          document.getElementById('err').innerHTML="Please choose another username!"
+        }
+      }
+ </script>
+
+</html>

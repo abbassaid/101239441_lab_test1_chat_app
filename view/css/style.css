@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+* {
+	box-sizing: border-box;
+}
+
+body, .btn, .chat-header, .chat-form-container, .join-header {
+	font-family: 'Roboto', sans-serif;
+	background: #e6e9ff;
+}
+
+body {
+	font-size: 16px;
+	margin: 20px;
+}
+
+a {
+	text-decoration: none;
+}
+
+.btn, .chat-form-container input[type='text'], .join-main input[type='text'], .join-main select {
+	padding: 5px;
+	font-size: 16px;
+}
+
+.btn {
+	cursor: pointer;
+	color: #556B2F;
+	border: 2px solid white;
+	border-radius: 10px;
+	background: #e6e9ff;
+	margin-bottom: 15px;
+}
+
+.chat-container, .join-container {
+	max-width: 1100px;
+	background: #fff;
+	margin: 30px auto;
+	overflow: hidden;
+}
+
+.chat-header, .chat-form-container, .join-header {
+	color: #fff;
+	padding: 15px;
+	background: #556B2F;
+}
+
+.chat-main {
+	display: grid;
+	grid-template-columns: 1fr 4fr;
+}
+
+.chat-sidebar, .join-main {
+	background: #2F4F4F;
+	color: #fff;
+	padding: 20px;
+}
+
+.chat-sidebar h2, .chat-sidebar h3, .chat-sidebar ul li, .chat-messages .message, .join-main p, .join-main .form-control, .join-main label {
+	margin-bottom: 15px;
+}
+
+.chat-messages, .chat-messages .message .meta, .join-main .btn {
+	padding: 10px;
+}
+
+.chat-messages {
+	max-height: 500px;
+	overflow-y: scroll;
+	margin-bottom: 15px;
+}
+
+.chat-messages .message {
+	border-radius: 20px;
+	background-color: whitesmoke;
+	overflow-wrap: break-word;
+}
+
+.chat-messages .message .meta {
+	color: #2F4F4F;
+	opacity: 0.7;
+}
+
+.chat-form-container form {
+	display: flex;
+}
+
+#sendbtn {
+	margin-left: 10px;
+}
+
+.chat-form-container input[type='text'], .join-main input[type='text'], .join-main select {
+	height: 40px;
+	width: 100%;
+	border: 1px solid #ccc;
+	margin-bottom: 20px;
+}
+
+.join-main .btn {
+	width: 100%;
+	background: #556B2F;
+	color: #fff;
+	border: none;
+}
+
+@media (max-width: 700px) {
+	.chat-main {
+		display: block;
+	}
+
+	.chat-sidebar {
+		display: none;
+	}
+}

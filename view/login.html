@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Chat Application</title>
+  <link rel="stylesheet" href="../css/login.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      background-color: #F5F5DC;
+      font-family: "Lato", sans-serif;
+    }
+
+    .loginFrm {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .form {
+      background-color: #D2B48C;
+      width: 400px;
+      border-radius: 8px;
+      padding: 20px 40px;
+    }
+
+    .title {
+      font-size: 50px;
+      margin-bottom: 50px;
+      color: #8B4513;
+    }
+
+    .inputContainer {
+      position: relative;
+      height: auto;
+      width: 90%;
+      margin-bottom: 17px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .label {
+      margin-bottom: 5px;
+      color: #8B4513;
+      font-size: 16px;
+    }
+
+    .input {
+      height: 45px;
+      width: 100%;
+      border: 1px solid #696969;
+      border-radius: 7px;
+      font-size: 16px;
+      padding: 0 20px;
+    }
+
+    .submitBtn {
+      display: block;
+      margin-left: auto;
+      padding: 15px 30px;
+      border: solid 1px black;
+      background-color: #8B4513;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 150px;
+    }
+
+    #err {
+      color: red;
+      position: absolute;
+      padding: 90px;
+    }
+  </style>
+</head>
+<body  onload="checkForErr()">
+
+
+    <div class="loginFrm">
+        <form action="/" method="post" class="form" >
+          <h1 class="title">Log in</h1>
+
+          <div class="inputContainer">
+            <label class="label">Username</label>
+            <input type="text" class="input" placeholder="Username" name="username" required>
+          </div>
+
+          <div class="inputContainer">
+            <label class="label">Password</label>
+            <input type="password" class="input" placeholder="password" name="password" required>
+          </div>
+
+          <p>New to the site? <a href="/signup">Sign Up</a></p>
+          <div id="err"></div>
+          <button type="submit" class="submitBtn">Log in</button>
+        </form>
+      </div>
+
+    <script>
+      function checkForErr(){
+        var objUrlParams = new URLSearchParams(window.location.search);
+        if(objUrlParams.get('wrong')=="uname" || (objUrlParams.get('wrong')=="pass")) {
+          document.getElementById('err').innerHTML="Wrong username or password"
+        }
+      }
+    </script>
+
+</body>
+
+
+</html>
