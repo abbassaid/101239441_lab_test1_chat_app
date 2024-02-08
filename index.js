@@ -40,12 +40,99 @@ io.on('connection', socket => {
 });
 
 // Express routes
-app.get('/signup', (req, res) => res.sendFile(path.join(__dirname, 'view', 'signup.html')));
-app.post('/login', (req, res) => res.sendFile(path.join(__dirname, 'view', 'login.html')));
-app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'view', 'login.html')));
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'view', 'login.html')));
-app.get('/chat/:room', handleChatRoomGet);
-app.post('/chat', handleChatPost);
+//http://localhost:8080/signup
+app.get('/signup', async (req, res) => {
+  res.sendFile(__dirname + '/view/signup.html')
+});
+
+//http://localhost:8080/login
+app.get('/login', async (req, res) => {
+  res.sendFile(__dirname + '/view/login.html')
+});
+app.post('/login', async (req, res) => {
+  const user = new userModel(req.body);
+
+  try {
+    await user.save((err) => {
+      if(err){
+        if (err.code === 11000) {
+          return res.redirect('/signup?err=username')
+        }
+
+        res.send(err)
+      }else{
+        res.sendFile(__dirname + '/view/login.html')
+      }
+    });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.get('/', async (req, res) => {
+  res.sendFile(__dirname + '/view/login.html')
+});
+app.post('/', async (req, res) => {
+  const username=req.body.username
+  const password=req.body.password
+
+  const user = await userModel.find({username:username});
+
+  try {
+    if(user.length != 0){
+      if(user[0].password==password){
+        return res.redirect('/')
+      }
+      else{
+        return res.redirect('/login?wrong=pass')
+      }
+    }else{
+      return res.redirect('/login?wrong=uname')
+    }
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.get('/chat/:room', async (req, res) => {
+  const room = req.params.room
+  const msg = await groupMessagesModel.find({room: room}).sort({'date_sent': 'desc'}).limit(10);
+  if(msg.length!=0){
+    res.send(msg)
+  }
+  else
+    res.sendFile(__dirname + '/html/chat.html')
+});
+app.post('/chat',async(req,res)=>{
+  const username=req.body.username
+  const user = await userModel.find({username:username});
+  console.log(user)
+  if(user[0].username==username){
+    return res.redirect('/chat/'+username)
+  }
+  else{
+    return res.redirect('/?err=noUser')
+  }
+})
+app.post('/', async (req, res) => {
+  const username=req.body.username
+  const password=req.body.password
+  const user = await userModel.find({username:username});
+  try {
+    if(user.length != 0){
+      if(user[0].password==password){
+        return res.redirect('/')
+      }
+      else{
+        return res.redirect('/login?wrong=pass')
+      }
+    }else{
+      return res.redirect('/login?wrong=uname')
+    }
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 // Server start
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
@@ -115,23 +202,3 @@ async function handleChatPost(req, res) {
     res.status(500).send(err);
   }
 }
-
-app.post('/', async (req, res) => {
-  const username=req.body.username
-  const password=req.body.password
-  const user = await userModel.find({username:username});
-  try {
-    if(user.length != 0){
-      if(user[0].password==password){
-        return res.redirect('/')
-      }
-      else{
-        return res.redirect('/login?wrong=pass')
-      }
-    }else{
-      return res.redirect('/login?wrong=uname')
-    }
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
